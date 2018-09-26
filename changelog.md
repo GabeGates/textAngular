@@ -1,3 +1,10 @@
+<a name="1.5.19"></a>
+## [1.5.18](https://github.com/GabeGates/textAngular/compare/v1.5.18...v1.5.19) (2018-09-26)
+
+### Bug Fixes
+
+- Fix for color picker slider when <base> is defined in HTML5
+
 <a name="1.5.18"></a>
 ## [1.5.18](https://github.com/GabeGates/textAngular/compare/v1.5.17...v1.5.18) (2018-09-26)
 

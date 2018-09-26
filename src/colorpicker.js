@@ -281,7 +281,7 @@
             var hsvRect = slideClone.getElementsByTagName('rect')[0];
 
             hsvGradient.id = 'gradient-hsv-' + uniqID;
-            hsvRect.setAttribute('fill', 'url(#' + hsvGradient.id + ')');
+            hsvRect.setAttribute('fill', 'url(' + window.location.href + '#' + hsvGradient.id + ')');
 
             var blackAndWhiteGradients = [pickerClone.getElementsByTagName('linearGradient')[0], pickerClone.getElementsByTagName('linearGradient')[1]];
             var whiteAndBlackRects = pickerClone.getElementsByTagName('rect');

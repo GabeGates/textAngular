@@ -1,4 +1,4 @@
-GabeGates/textAngular v1.5.18
+GabeGates/textAngular v1.5.19
 ===========
 
 ## Requirements

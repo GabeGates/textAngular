@@ -1110,7 +1110,7 @@ License : 2013 MIT
 @license textAngular
 Author : Gabe Gates
 License : 2018 MIT
-Version 1.5.18
+Version 1.5.19
 
 See README.md or https://github.com/GabeGates/textAngular/wiki for requirements and use.
 */
@@ -1403,7 +1403,7 @@ Commonjs package manager support (eg componentjs).
             var hsvRect = slideClone.getElementsByTagName('rect')[0];
 
             hsvGradient.id = 'gradient-hsv-' + uniqID;
-            hsvRect.setAttribute('fill', 'url(#' + hsvGradient.id + ')');
+            hsvRect.setAttribute('fill', 'url(' + window.location.href + '#' + hsvGradient.id + ')');
 
             var blackAndWhiteGradients = [pickerClone.getElementsByTagName('linearGradient')[0], pickerClone.getElementsByTagName('linearGradient')[1]];
             var whiteAndBlackRects = pickerClone.getElementsByTagName('rect');
@@ -1580,7 +1580,7 @@ Commonjs package manager support (eg componentjs).
 })(window, window.document);
 
 // NOTE: textAngularVersion must match the Gruntfile.js 'setVersion' task.... and have format v/d+./d+./d+
-var textAngularVersion = 'v1.5.18';   // This is automatically updated during the build process to the current release!
+var textAngularVersion = 'v1.5.19';   // This is automatically updated during the build process to the current release!
 
 
 // IE version detection - http://stackoverflow.com/questions/4169160/javascript-ie-detection-why-not-use-simple-conditional-comments
