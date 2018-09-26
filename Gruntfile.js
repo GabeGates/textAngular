@@ -16,17 +16,17 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks('grunt-shell');
 	grunt.loadNpmTasks('grunt-umd');
 
-	grunt.registerTask('compile', ['concat', 'umd', 'copy:setupFiles', 'jshint', 'uglify']);
+	grunt.registerTask('compile', ['concat', 'umd', 'copy:setupFiles', 'jshint', 'uglify','demo_pages']);
 	grunt.registerTask('default', ['compile', 'test']);
 	grunt.registerTask('test', ['clean:coverage', 'jshint', 'karma', 'coverage']);
 	grunt.registerTask('travis-test', ['concat', 'umd', 'copy:setupFiles', 'jshint', 'karma', 'coverage', 'coveralls']);
 
-	grunt.registerTask('release', ['bump-only', 'setVersion', 'compile', 'demo_pages', 'conventionalChangelog', 'shell:changelog', 'gitcommit','bump-commit', 'shell:publish']);
-	grunt.registerTask('release:patch', ['bump-only:patch','setVersion','compile','demo_pages','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
-	grunt.registerTask('release:minor', ['bump-only:minor','setVersion','compile','demo_pages','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
-	grunt.registerTask('release:major', ['bump-only:major','setVersion','compile','demo_pages','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
-	grunt.registerTask('release:prerelease', ['bump-only:prerelease','setVersion','demo_pages','compile','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
-	
+	grunt.registerTask('release', ['bump-only', 'setVersion', 'compile', 'conventionalChangelog', 'shell:changelog', 'gitcommit','bump-commit', 'shell:publish']);
+	grunt.registerTask('release:patch', ['bump-only:patch','setVersion','compile','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
+	grunt.registerTask('release:minor', ['bump-only:minor','setVersion','compile','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
+	grunt.registerTask('release:major', ['bump-only:major','setVersion','compile','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
+	grunt.registerTask('release:prerelease', ['bump-only:prerelease','setVersion','compile','conventionalChangelog','shell:changelog','gitcommit','bump-commit', 'shell:publish']);
+
 	grunt.registerTask('setVersion', function () {
 		var pkgJson = require('./package.json');
 		var version = pkgJson.version;
@@ -35,6 +35,16 @@ module.exports = function (grunt) {
 		contents = contents.replace(/textAngularVersion = 'v\d+.\d+.\d+(-\d)?'/i, "textAngularVersion = 'v"+version+"'");
 		grunt.file.write('./src/globals.js', contents);
 		console.log('Updated src/globals.js to textAngular version: v'+version);
+
+		contents = grunt.file.read('./bower.json');
+		contents = contents.replace(/\"version": \"\d+.\d+.\d+(-\d)?/i, "\"version\": \""+version);
+		grunt.file.write('./bower.json', contents);
+		console.log('Updated bower.json to textAngular version: v'+version);
+
+		contents = grunt.file.read('./README.md');
+		contents = contents.replace(/textAngular v\d+.\d+.\d+(-\d)?/i, "textAngular v"+version);
+		grunt.file.write('./README.md', contents);
+		console.log('Updated README.md to textAngular version: v'+version);
 	});
 
 	var testConfig = function (configFile, customOptions) {
@@ -133,10 +143,10 @@ module.exports = function (grunt) {
 		coverage: {
 			options: {
 				thresholds: {
-					'statements': 100,
-					'branches': 100,
-					'lines': 100,
-					'functions': 100
+					'statements': 95,
+					'branches': 95,
+					'lines': 95,
+					'functions': 95
 				},
 			dir: 'coverage'
 			}
@@ -157,7 +167,7 @@ module.exports = function (grunt) {
 			}
 		},
 		jshint: {
-			files: ['src/*.js', 'test/*.spec.js', 'test/taBind/*.spec.js', '!src/textAngular-sanitize.js'],// don't hint the textAngularSanitize as they will fail
+			files: ['src/*.js', 'test/*.spec.js', 'test/taBind/*.spec.js', '!src/textAngular-sanitize.js', '!src/colorpicker.js'],// don't hint the textAngularSanitize as they will fail
 			options: {
 				eqeqeq: true,
 				immed: true,
@@ -181,10 +191,10 @@ module.exports = function (grunt) {
 		concat: {
 			dist: {
 				options: {
-					banner: "/*\n@license textAngular\nAuthor : Austin Anderson\nLicense : 2013 MIT\nVersion <%- pkg.version %>\n\nSee README.md or https://github.com/fraywing/textAngular/wiki for requirements and use.\n*/\n\n/*\nCommonjs package manager support (eg componentjs).\n*/\n\n\n\"use strict\";"
+					banner: "/*\n@license textAngular\nAuthor : Austin Anderson\nLicense : 2013 MIT\n@license textAngular\nAuthor : Gabe Gates\nLicense : 2018 MIT\nVersion <%- pkg.version %>\n\nSee README.md or https://github.com/GabeGates/textAngular/wiki for requirements and use.\n*/\n\n/*\nCommonjs package manager support (eg componentjs).\n*/\n\n\n\"use strict\";"
 				},
 				files:{
-					'dist/textAngular.js': ['src/globals.js','src/factories.js','src/DOM.js','src/validators.js','src/taBind.js','src/main.js'],
+					'dist/textAngular.js': ['src/colorpicker.js','src/globals.js','src/factories.js','src/DOM.js','src/validators.js','src/taBind.js','src/main.js'],
 				}
 			},
 			umd: {
@@ -232,8 +242,8 @@ module.exports = function (grunt) {
 			}
 		},
 		watch: {
-			files: "src/*.js",
-			tasks: "compile"
+			files: "src/**/*",
+			tasks: ["compile","compile"]
 		}
 	});
 };

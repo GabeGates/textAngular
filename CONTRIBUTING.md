@@ -49,7 +49,7 @@ Here is a great example of a well defined issue: https://github.com/angular/angu
 ### Submitting a Pull Request
 Before you submit your pull request consider the following guidelines:
 
-* Search [GitHub](https://github.com/fraywing/textAngular/pulls) for an open or closed Pull Request
+* Search [GitHub](https://github.com/GabeGates/textAngular/pulls) for an open or closed Pull Request
   that relates to your submission. You don't want to duplicate effort.
 * Make your changes in a new git branch
 
@@ -84,7 +84,7 @@ Before you submit your pull request consider the following guidelines:
     ```
 
 * In GitHub, send a pull request to `angular:master`.
-* If we suggest changes then 
+* If we suggest changes then
   * Make the required updates.
   * Re-run the Angular test suite to ensure tests are still passing.
   * Rebase your branch and force push to your GitHub repository (this will update your Pull Request):

@@ -101,7 +101,7 @@ angular.module('textAngularSetup', [])
     keyMappings : [],
     toolbar: [
         ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote'],
-        ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+        ['bold', 'italics', 'underline', 'strikeThrough', 'fontColorPicker', 'ul', 'ol', 'redo', 'undo', 'clear'],
         ['justifyLeft','justifyCenter','justifyRight','justifyFull','indent','outdent'],
         ['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
     ],
@@ -144,7 +144,7 @@ angular.module('textAngularSetup', [])
 // This is the element selector string that is used to catch click events within a taBind, prevents the default and $emits a 'ta-element-select' event
 // these are individually used in an angular.element().find() call. What can go here depends on whether you have full jQuery loaded or just jQLite with angularjs.
 // div is only used as div.ta-insert-video caught in filter.
-.value('taSelectableElements', ['a','img'])
+.value('taSelectableElements', ['a','img','font'])
 
 // This is an array of objects with the following options:
 //				selector: <string> a jqLite or jQuery selector string
@@ -216,6 +216,9 @@ angular.module('textAngularSetup', [])
     strikeThrough:{
         tooltip: 'Strikethrough'
     },
+    fontColorPicker:{
+        tooltip: 'Font Color Picker'
+    },
     justifyLeft: {
         tooltip: 'Align text left'
     },
@@ -269,6 +272,57 @@ angular.module('textAngularSetup', [])
     }
 })
 .factory('taToolFunctions', ['$window','taTranslations', function($window, taTranslations) {
+
+    var fontColorPickerBuilder = function($element, editorScope, isWrapSelection) {
+        editorScope.displayElements.popover.css('width', '175px');
+        var container = editorScope.displayElements.popoverContainer;
+        container.empty();
+        container.css('line-height', '28px');
+
+        var pickerContainer = angular.element('<div style="position: relative;float: left;"></div>');
+        pickerContainer.on('click', function(event){
+            // Prevent bubble up causing the ancestor to close the popover
+            event.stopImmediatePropagation();
+        });
+        var picker = angular.element('<div id="picker" style="width: 100px; height: 100px;cursor: crosshair;float: left;margin-left: 12px;margin-bottom: 10px;"></div>');
+        var pickerIndicator = angular.element('<div id="picker-indicator" style="left: auto;right: 0px;top: 0px;width: 1px;margin-left: 12px;height: 1px;border: 1px solid black;background-color: white;position: absolute;pointer-events: none;"></div>');
+        pickerContainer.append(picker);
+        pickerContainer.append(pickerIndicator);
+        container.append(pickerContainer);
+
+        var slideContainer = angular.element('<div style="margin-left: 5px;position: relative;float: left;"></div>');
+        slideContainer.on('click', function(event){
+            // Prevent bubble up causing the ancestor to close the popover
+            event.stopImmediatePropagation();
+        });
+        var slide = angular.element('<div id="slide" style="width: 15px; height: 100px; cursor: crosshair; float: left;"></div>');
+        var slideIndicator = angular.element('<div id="slide-indicator" style="width: 100%;height: 2px;left: 0px;background-color: black;position: absolute;top: 0;pointer-events: none;"></div>');
+        slideContainer.append(slide);
+        slideContainer.append(slideIndicator);
+        container.append(slideContainer);
+
+        editorScope.showPopover($element);
+
+        // Using https://github.com/DavidDurman/FlexiColorPicker
+        var colorPicker = new ColorPicker(
+            document.getElementById('slide'),
+            document.getElementById('picker'),
+            function(hex, hsv, rgb, mousePicker, mouseSlide) {
+                ColorPicker.positionIndicators(
+                    document.getElementById('slide-indicator'),
+                    document.getElementById('picker-indicator'),
+                    mouseSlide, mousePicker
+                );
+                if(isWrapSelection) {
+                    editorScope.wrapSelection("foreColor", hex);
+                } else {
+                    $element.attr("color", hex);
+                }
+                editorScope.updateTaBindtaTextElement();
+        });
+        colorPicker.setHex($element.attr("color") || "#d82222");
+    };
+
     return {
         imgOnSelectAction: function(event, $element, editorScope){
             // setup the editor toolbar
@@ -278,7 +332,7 @@ angular.module('textAngularSetup', [])
                 editorScope.hidePopover();
             };
             event.preventDefault();
-            editorScope.displayElements.popover.css('width', '375px');
+            editorScope.displayElements.popover.css('width', '377px');
             var container = editorScope.displayElements.popoverContainer;
             container.empty();
             var buttonGroup = angular.element('<div class="btn-group" style="padding-right: 6px;">');
@@ -325,7 +379,7 @@ angular.module('textAngularSetup', [])
             container.append(buttonGroup);
 
             buttonGroup = angular.element('<div class="btn-group" style="padding-right: 6px;">');
-            var floatLeft = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="fa fa-align-left"></i></button>');
+            var floatLeft = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="glyphicon glyphicon-align-left"></i></button>');
             floatLeft.on('click', function(event){
                 event.preventDefault();
                 // webkit
@@ -336,7 +390,7 @@ angular.module('textAngularSetup', [])
                 $element.css('styleFloat', 'left');
                 finishEdit();
             });
-            var floatRight = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="fa fa-align-right"></i></button>');
+            var floatRight = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="glyphicon glyphicon-align-right"></i></button>');
             floatRight.on('click', function(event){
                 event.preventDefault();
                 // webkit
@@ -347,7 +401,7 @@ angular.module('textAngularSetup', [])
                 $element.css('styleFloat', 'right');
                 finishEdit();
             });
-            var floatNone = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="fa fa-align-justify"></i></button>');
+            var floatNone = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="glyphicon glyphicon-align-justify"></i></button>');
             floatNone.on('click', function(event){
                 event.preventDefault();
                 // webkit
@@ -364,7 +418,7 @@ angular.module('textAngularSetup', [])
             container.append(buttonGroup);
 
             buttonGroup = angular.element('<div class="btn-group">');
-            var remove = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="fa fa-trash-o"></i></button>');
+            var remove = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" unselectable="on" tabindex="-1"><i class="glyphicon glyphicon-trash"></i></button>');
             remove.on('click', function(event){
                 event.preventDefault();
                 $element.remove();
@@ -376,6 +430,11 @@ angular.module('textAngularSetup', [])
             editorScope.showPopover($element);
             editorScope.showResizeOverlay($element);
         },
+        fontColorPickerOnSelectAction: function(event, $element, editorScope) {
+            event.preventDefault();
+            fontColorPickerBuilder($element, editorScope);
+        },
+        fontColorPickerBuilder : fontColorPickerBuilder,
         aOnSelectAction: function(event, $element, editorScope){
             // setup the editor toolbar
             // Credit to the work at http://hackerwins.github.io/summernote/ for this editbar logic
@@ -395,7 +454,7 @@ angular.module('textAngularSetup', [])
             });
             container.append(link);
             var buttonGroup = angular.element('<div class="btn-group pull-right">');
-            var reLinkButton = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" tabindex="-1" unselectable="on" title="' + taTranslations.editLink.reLinkButton.tooltip + '"><i class="fa fa-edit icon-edit"></i></button>');
+            var reLinkButton = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" tabindex="-1" unselectable="on" title="' + taTranslations.editLink.reLinkButton.tooltip + '"><i class="glyphicon glyphicon-edit"></i></button>');
             reLinkButton.on('click', function(event){
                 event.preventDefault();
                 var urlLink = $window.prompt(taTranslations.insertLink.dialogPrompt, $element.attr('href'));
@@ -406,7 +465,7 @@ angular.module('textAngularSetup', [])
                 editorScope.hidePopover();
             });
             buttonGroup.append(reLinkButton);
-            var unLinkButton = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" tabindex="-1" unselectable="on" title="' + taTranslations.editLink.unLinkButton.tooltip + '"><i class="fa fa-unlink icon-unlink"></i></button>');
+            var unLinkButton = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" tabindex="-1" unselectable="on" title="' + taTranslations.editLink.unLinkButton.tooltip + '"><i class="glyphicon glyphicon-remove"></i></button>');
             // directly before this click event is fired a digest is fired off whereby the reference to $element is orphaned off
             unLinkButton.on('click', function(event){
                 event.preventDefault();
@@ -446,7 +505,7 @@ angular.module('textAngularSetup', [])
         throw angular.$$minErr('textAngular')("textAngularSetup", "The textAngular-sanitize provider has been replaced by another -- have you included angular-sanitize by mistake?");
     }
     taRegisterTool("html", {
-        iconclass: 'fa fa-code',
+        buttontext: '&lt; /&gt;',
         tooltiptext: taTranslations.html.tooltip,
         action: function(){
             this.$editor().switchView();
@@ -489,7 +548,7 @@ angular.module('textAngularSetup', [])
         activeState: function(){ return this.$editor().queryFormatBlockState('pre'); }
     });
     taRegisterTool('ul', {
-        iconclass: 'fa fa-list-ul',
+        iconclass: 'glyphicon glyphicon-list',
         tooltiptext: taTranslations.ul.tooltip,
         action: function(){
             return this.$editor().wrapSelection("insertUnorderedList", null);
@@ -497,7 +556,7 @@ angular.module('textAngularSetup', [])
         activeState: function(){ return this.$editor().queryCommandState('insertUnorderedList'); }
     });
     taRegisterTool('ol', {
-        iconclass: 'fa fa-list-ol',
+        iconclass: 'glyphicon glyphicon-list glyphicon-sort-by-order',
         tooltiptext: taTranslations.ol.tooltip,
         action: function(){
             return this.$editor().wrapSelection("insertOrderedList", null);
@@ -505,7 +564,7 @@ angular.module('textAngularSetup', [])
         activeState: function(){ return this.$editor().queryCommandState('insertOrderedList'); }
     });
     taRegisterTool('quote', {
-        iconclass: 'fa fa-quote-right',
+        buttontext: '""',
         tooltiptext: taTranslations.quote.tooltip,
         action: function(){
             return this.$editor().wrapSelection("formatBlock", "<BLOCKQUOTE>");
@@ -513,21 +572,21 @@ angular.module('textAngularSetup', [])
         activeState: function(){ return this.$editor().queryFormatBlockState('blockquote'); }
     });
     taRegisterTool('undo', {
-        iconclass: 'fa fa-undo',
+        iconclass: 'glyphicon glyphicon-repeat glyph-flip',
         tooltiptext: taTranslations.undo.tooltip,
         action: function(){
             return this.$editor().wrapSelection("undo", null);
         }
     });
     taRegisterTool('redo', {
-        iconclass: 'fa fa-repeat',
+        iconclass: 'glyphicon glyphicon-repeat',
         tooltiptext: taTranslations.redo.tooltip,
         action: function(){
             return this.$editor().wrapSelection("redo", null);
         }
     });
     taRegisterTool('bold', {
-        iconclass: 'fa fa-bold',
+        iconclass: 'glyphicon glyphicon-bold',
         tooltiptext: taTranslations.bold.tooltip,
         action: function(){
             return this.$editor().wrapSelection("bold", null);
@@ -538,7 +597,7 @@ angular.module('textAngularSetup', [])
         commandKeyCode: 98
     });
     taRegisterTool('justifyLeft', {
-        iconclass: 'fa fa-align-left',
+        iconclass: 'glyphicon glyphicon-align-left',
         tooltiptext: taTranslations.justifyLeft.tooltip,
         action: function(){
             return this.$editor().wrapSelection("justifyLeft", null);
@@ -570,7 +629,7 @@ angular.module('textAngularSetup', [])
         }
     });
     taRegisterTool('justifyRight', {
-        iconclass: 'fa fa-align-right',
+        iconclass: 'glyphicon glyphicon-align-right',
         tooltiptext: taTranslations.justifyRight.tooltip,
         action: function(){
             return this.$editor().wrapSelection("justifyRight", null);
@@ -595,7 +654,7 @@ angular.module('textAngularSetup', [])
         }
     });
     taRegisterTool('justifyFull', {
-        iconclass: 'fa fa-align-justify',
+        iconclass: 'glyphicon glyphicon-align-justify',
         tooltiptext: taTranslations.justifyFull.tooltip,
         action: function(){
             return this.$editor().wrapSelection("justifyFull", null);
@@ -618,7 +677,7 @@ angular.module('textAngularSetup', [])
         }
     });
     taRegisterTool('justifyCenter', {
-        iconclass: 'fa fa-align-center',
+        iconclass: 'glyphicon glyphicon-align-center',
         tooltiptext: taTranslations.justifyCenter.tooltip,
         action: function(){
             return this.$editor().wrapSelection("justifyCenter", null);
@@ -644,7 +703,7 @@ angular.module('textAngularSetup', [])
         }
     });
     taRegisterTool('indent', {
-        iconclass: 'fa fa-indent',
+        iconclass: 'glyphicon glyphicon-indent-left',
         tooltiptext: taTranslations.indent.tooltip,
         action: function(){
             return this.$editor().wrapSelection("indent", null);
@@ -655,7 +714,7 @@ angular.module('textAngularSetup', [])
         commandKeyCode: 'TabKey'
     });
     taRegisterTool('outdent', {
-        iconclass: 'fa fa-outdent',
+        iconclass: 'glyphicon glyphicon-indent-right',
         tooltiptext: taTranslations.outdent.tooltip,
         action: function(){
             return this.$editor().wrapSelection("outdent", null);
@@ -666,7 +725,7 @@ angular.module('textAngularSetup', [])
         commandKeyCode: 'ShiftTabKey'
     });
     taRegisterTool('italics', {
-        iconclass: 'fa fa-italic',
+        iconclass: 'glyphicon glyphicon-italic',
         tooltiptext: taTranslations.italic.tooltip,
         action: function(){
             return this.$editor().wrapSelection("italic", null);
@@ -677,7 +736,7 @@ angular.module('textAngularSetup', [])
         commandKeyCode: 105
     });
     taRegisterTool('underline', {
-        iconclass: 'fa fa-underline',
+        iconclass: 'glyphicon glyphicon-font glyph-underline',
         tooltiptext: taTranslations.underline.tooltip,
         action: function(){
             return this.$editor().wrapSelection("underline", null);
@@ -688,7 +747,7 @@ angular.module('textAngularSetup', [])
         commandKeyCode: 117
     });
     taRegisterTool('strikeThrough', {
-        iconclass: 'fa fa-strikethrough',
+        iconclass: 'glyphicon glyphicon-font glyph-strikethrough',
         tooltiptext: taTranslations.strikeThrough.tooltip,
         action: function(){
             return this.$editor().wrapSelection("strikeThrough", null);
@@ -697,8 +756,24 @@ angular.module('textAngularSetup', [])
             return document.queryCommandState('strikeThrough');
         }
     });
+    taRegisterTool('fontColorPicker', {
+        iconclass: 'glyphicon glyphicon-text-color red-color',
+        tooltiptext: taTranslations.fontColorPicker.tooltip,
+        action: function(){
+            var selectionElement = angular.element(taSelection.getSelectionElement());
+            taToolFunctions.fontColorPickerBuilder(selectionElement, this.$editor(), true);
+        },
+        activeState: function(){
+            var selectionElement = angular.element(taSelection.getSelectionElement());
+            return document.queryCommandValue('foreColor') && "FONT" === selectionElement.prop("tagName");
+        },
+        onElementSelect: {
+            element: 'font',
+            action: taToolFunctions.fontColorPickerOnSelectAction
+        }
+    });
     taRegisterTool('clear', {
-        iconclass: 'fa fa-ban',
+        iconclass: 'glyphicon glyphicon-ban-circle',
         tooltiptext: taTranslations.clear.tooltip,
         action: function(deferred, restoreSelection){
             var i, selectedElements, elementsSeen;
@@ -861,7 +936,7 @@ angular.module('textAngularSetup', [])
     };
 
     taRegisterTool('insertImage', {
-        iconclass: 'fa fa-picture-o',
+        iconclass: 'glyphicon glyphicon-picture',
         tooltiptext: taTranslations.insertImage.tooltip,
         action: function(){
             var imageLink;
@@ -895,7 +970,7 @@ angular.module('textAngularSetup', [])
         }
     });
     taRegisterTool('insertVideo', {
-        iconclass: 'fa fa-youtube-play',
+        iconclass: 'glyphicon glyphicon-facetime-video',
         tooltiptext: taTranslations.insertVideo.tooltip,
         action: function(){
             var urlPrompt;
@@ -937,7 +1012,7 @@ angular.module('textAngularSetup', [])
     });
     taRegisterTool('insertLink', {
         tooltiptext: taTranslations.insertLink.tooltip,
-        iconclass: 'fa fa-link',
+        iconclass: 'glyphicon glyphicon-link',
         action: function(){
             var urlLink;
             // if this link has already been set, we need to just edit the existing link
