@@ -202,6 +202,11 @@ describe('taTools test tool actions', function(){
             expect(button.hasClass('active'));
         });
 
+        it('fontColorPicker button should function correctly', function(){
+            button = findAndTriggerButton('fontColorPicker');
+            expect(button.hasClass('active'));
+        });
+
         it('ul button should function correctly', function(){
             button = findAndTriggerButton('ul');
             expect(button.hasClass('active'));
@@ -825,6 +830,35 @@ describe('taTools test tool actions', function(){
             editorScope.displayElements.popoverContainer.find('button').eq(7).triggerHandler('click');
             $rootScope.$digest();
             expect(editorScope.displayElements.text.find('p').find('img').length).toBe(0);
+        });
+    });
+
+    describe('test font color picker popover logic', function(){
+        beforeEach(module('textAngular'));
+        beforeEach(inject(function (_$compile_, _$rootScope_, $document, textAngularManager, _$window_) {
+            $window = _$window_;
+            $window.prompt = function(){ return ''; };
+            $rootScope = _$rootScope_;
+            element = _$compile_('<text-angular name="test"><font color="#2030d8">This is colored text</font></text-angular>')($rootScope);
+            $document.find('body').append(element);
+            $rootScope.$digest();
+            editorScope = textAngularManager.retrieveEditor('test').scope;
+        }));
+        afterEach(function(){
+            element.remove();
+        });
+
+        it('opens on click', function(){
+            editorScope.displayElements.text.find('font').triggerHandler('click');
+            editorScope.$parent.$digest();
+            expect(editorScope.displayElements.popover.hasClass('in')).toBe(true);
+        });
+
+        it('has correct content', function(){
+            editorScope.displayElements.text.find('font').triggerHandler('click');
+            var contents = editorScope.displayElements.popoverContainer.contents();
+            expect(contents.find('#picker')).toBeTruthy();
+            expect(contents.find('#slide')).toBeTruthy();
         });
     });
 });

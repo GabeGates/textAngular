@@ -1,3 +1,20 @@
+<a name="1.5.17"></a>
+## [1.5.17](https://github.com/fraywing/textAngular/compare/v1.5.16...v1.5.17) (2018-09-26)
+
+### Forked Cleanup & Features
+
+- added new registry to .bowerrc file (herokuapp no longer main server)
+- Clean up references to old project
+- Update licence info
+- Updated package managers to only be dependant on angularJS 1.5
+- Removed font-awesome dependency
+- font-awesome icons replaced with bootstrap 3 glyphicons
+- Updated demo.html
+- margin-bottom added to button groups in toolbars
+- Added color picker
+- Added Karma Tests
+- Adjusted Karma coverage to 95%
+
 <a name="1.5.16"></a>
 ## [1.5.16](https://github.com/fraywing/textAngular/compare/v1.5.15...v1.5.16) (2016-12-05)
 
@@ -47,7 +64,7 @@
 * **taBind, textAngular-sanitize:** Corrected and enhanced formating comming from Word and OneNote ([fbcd381](https://github.com/fraywing/textAngular/commit/fbcd381))
 * **main:** Cleanup event handlers that are placed on the window (from Bret Little)
 * **textAngularSetup:** Fix clear formatting functionality when used with ta-default-wrap=br #1374 - thanks to damien-otis for this fix. 0e45059062fadf2499b4d4d4f78621a49cb89968
-* **taBind:** Fix don't deselect after 1000ms after applying styling #1381 - thanks to damien-otis for this fix 
+* **taBind:** Fix don't deselect after 1000ms after applying styling #1381 - thanks to damien-otis for this fix
 
 
 <a name="1.5.12"></a>
@@ -62,7 +79,7 @@
 * **main:** Fix multi-deselect problem [#1334](https://github.com/fraywing/textAngular/issues/1334) from mikolawannabe ([64d0c4a](https://github.com/fraywing/textAngular/commit/64d0c4a))
 * **taBind:** Corrected console errors caused by #text nodes - damien-otis. ([6dd1556](https://github.com/fraywing/textAngular/commit/6dd1556))
 * **main:** Corrected issue [#299](https://github.com/fraywing/textAngular/issues/299) around the positioning of the popover on scrolling ([53f9529](https://github.com/fraywing/textAngular/commit/53f9529))
-* **main:** Corrected Issue: [#1326](https://github.com/fraywing/textAngular/issues/1326) ([f9715de](https://github.com/fraywing/textAngular/commit/f9715de)) No reflowPopover() when window resized or scrolled. 
+* **main:** Corrected Issue: [#1326](https://github.com/fraywing/textAngular/issues/1326) ([f9715de](https://github.com/fraywing/textAngular/commit/f9715de)) No reflowPopover() when window resized or scrolled.
 * **taBind:** Corrected 'MS Word, some word spaces get lost (line break issue?)' [#598](https://github.com/fraywing/textAngular/issues/598) ([e29e463](https://github.com/fraywing/textAngular/commit/e29e463))
 
 
@@ -132,7 +149,7 @@
 
 * **textAngular:**
    * Fixed several issues around Italic, Bold, Strikethrough, Underline state in the  ([7823937b](https://github.com/fraywing/textAngular/commit/7823937b))
-   * fix(DOM, textAngularSetup): Functionality under Firefox is now much improved. 
+   * fix(DOM, textAngularSetup): Functionality under Firefox is now much improved.
    * Build Enhancement: updated many of the development packages.  There is more work to do, but some improvement.
    * Fix(main): removed the saveFocusSelection() and restoreFocusSelection()
       which to do function properly and create problems!
@@ -158,12 +175,12 @@
       no longer tied to the toolbar.
       We also added some code to enable $log messages in the karma testing when necessary
       See the textAngularManager.spec.js file for details looking at 'var $log', beforeEach() and afterEach()
-     (https://github.com/fraywing/textAngular/commit/daec3e8769f187be3e9f9f5a3c4ac33241f3e492) 
+     (https://github.com/fraywing/textAngular/commit/daec3e8769f187be3e9f9f5a3c4ac33241f3e492)
   * Fix(taFixChrome.spec): added a test to verify the fix form #1281 (https://github.com/fraywing/textAngular/commit/cd45b29a9fddeffaab5bae267572a59b04bd0370)
   * Fix(main): We now respect he selection and enhanced wrapSelection (https://github.com/fraywing/textAngular/commit/13379176e7b732bf8b83aee9fe0fa5104dcf3473)
   * FIx(Gruntfile): Added the missing task demo_pages to all release paths
   * Chore(README): Update to new pluker link
-      
+
 * **factories:**
   * Only append remainder if the Apple-converted-space has matched ([e086974c](https://github.com/fraywing/textAngular/commit/e086974c))
   * Add remainder of html string to finalHtml ([950ed2d8](https://github.com/fraywing/textAngular/commit/950ed2d8))
@@ -174,13 +191,13 @@
 ### 1.5.6-0 (2016-08-17)
 
 * **textAngular:**
-  * Enhancement(demo, static-demo, textAngular.com) Added version display to demo code 
+  * Enhancement(demo, static-demo, textAngular.com) Added version display to demo code
            (https://github.com/fraywing/textAngular/commit/3c3ce76c3805d67e49c980c5bf1da15f52a24781)
-  * Enhancement(main, globals, Gruntfile, textAngularManger.spec, textAngular.spec): 
+  * Enhancement(main, globals, Gruntfile, textAngularManger.spec, textAngular.spec):
        Added a new directive text-angular-version and a new function to textAngularManger:getVersion()
        I have wanted to add this for a long time to make it easier to display the version of textAngular being used.
            (https://github.com/fraywing/textAngular/commit/1ffa6f7263ce844a4e300226616a9d2282143f56)
-       This also modifies the build process to automatically put the version into globals.js     
+       This also modifies the build process to automatically put the version into globals.js
 
 <a name"1.5.5"></a>
 ### 1.5.5 (2016-08-15)
@@ -188,8 +205,8 @@
 * **textAnglar:**
   * Fix(DOM, globals, main, taBind, textAngular.spec): Resoved the issues around the improvements from v1.5.4
        The bulk of the changes can be seen here: https://github.com/fraywing/textAngular/commit/c39f20d9cf2372f94b579d018b0cb9bb553e33ef
-       
-       
+
+
 <a name"1.5.4"></a>
 ### 1.5.4 (2016-08-06)
 
@@ -203,7 +220,7 @@
          - textAngular.spec: added test for zero width spaces
   *  Enhancement(added Support for font-style = italic and font-size = [size em/px/%] in sanitize function validStyles,  (https://github.com/fraywing/textAngular/commit/dde3d7f621c7d4403577853374223abe5c9d15db)
                  Merge pull request #964 from rdkleine/master
-  *  Fix(main, taBind, textAngularSetup, globals, taTools.spec): Immproved the issues 
+  *  Fix(main, taBind, textAngularSetup, globals, taTools.spec): Immproved the issues
           with html and model getting out of sync (https://github.com/fraywing/textAngular/commit/5453c6b8fd2d72c6bdfb1dd83cb9fc0ed6df0a88)
           Also corrected issue under Firefox where the initial selection was before all the content
           - globals: improved stripHtmlToText() slightly
@@ -228,8 +245,8 @@
          - added a global stripHtmlToText() function
          - added a new test to verify the performance tool and new stripHtmlToText() function
          (https://github.com/fraywing/textAngular/commit/31cf9c4d307a02aa9f078daceea9bd38a7d70c3a)
-                               
-                               
+
+
 <a name"1.5.3"></a>
 ### 1.5.3 (2016-07-29)
 
@@ -237,13 +254,13 @@
 
 * **textAngular:**
   * Fix(textAngularManager): Corrected bug #1231 Leaking memory scopes (https://github.com/fraywing/textAngular/commit/a0024a24a3ca0c40a3cd0ffed0edbc475f2a91ff)
-  * Feat(textAngularManager): Added a function updateStyles() to force all the updateSelectedStyles() to be updated.  
+  * Feat(textAngularManager): Added a function updateStyles() to force all the updateSelectedStyles() to be updated.
                               This also now automatically sets up the initialization for tools in most cases. (https://github.com/fraywing/textAngular/commit/d373fe10e770bf521641975cbc6a4f480d0a1f9e)
-  * Fix(main): Very small tweak in setupTriggerUpdateStyles() to accept the default $interval call that invokes a 
+  * Fix(main): Very small tweak in setupTriggerUpdateStyles() to accept the default $interval call that invokes a
                $apply which will be more robust. (https://github.com/fraywing/textAngular/commit/0d860d0a97c440b868639bfb3ea9f3f943658da6)
-  * Enhancement(main): Show switch HTML button all the time. Originally from ershwetabansal (https://github.com/fraywing/textAngular/commit/db1f5a0bb50019c56ff8863c8a42fdbef2ce53ab)                                           
+  * Enhancement(main): Show switch HTML button all the time. Originally from ershwetabansal (https://github.com/fraywing/textAngular/commit/db1f5a0bb50019c56ff8863c8a42fdbef2ce53ab)
   * Fix(textAngularSetup): We now block javascript for 'insertLink', 'insertVideo', and 'insertImage' issue: #1189 (https://github.com/fraywing/textAngular/commit/37e3f7acdb7099d825480b45cb55da7c756a0ae7)
-  * Fix(taBind): corrected issue around Model becomes empty after edit Issue: #1230 (https://github.com/fraywing/textAngular/commit/17b4497ec3bd3939571724e4c9aad145d51e776c)                           
+  * Fix(taBind): corrected issue around Model becomes empty after edit Issue: #1230 (https://github.com/fraywing/textAngular/commit/17b4497ec3bd3939571724e4c9aad145d51e776c)
 
 
 <a name"1.5.2"></a>
@@ -290,8 +307,8 @@
 #### Bug Fixes
 
 * **textAngular:**
-  * Fix(textAngular): several bug fixes related to pasting from word. Closes #644, #617 ([f7d34a33](https://github.com/fraywing/textAngular/commit/f7d34a33658d7f336c2891cf9618ba34956c5bad))  
-  * Fix(textAngular): several bug fixes related to pasting from word. Closes #644, #617 ([f7d34a33](https://github.com/fraywing/textAngular/commit/f7d34a33658d7f336c2891cf9618ba34956c5bad))  
+  * Fix(textAngular): several bug fixes related to pasting from word. Closes #644, #617 ([f7d34a33](https://github.com/fraywing/textAngular/commit/f7d34a33658d7f336c2891cf9618ba34956c5bad))
+  * Fix(textAngular): several bug fixes related to pasting from word. Closes #644, #617 ([f7d34a33](https://github.com/fraywing/textAngular/commit/f7d34a33658d7f336c2891cf9618ba34956c5bad))
   * Fix(npm): bad package for 1.4.5 is updated to current version. Closes #888
 
 #### Features
@@ -369,7 +386,7 @@ If you were using a different sanitize provider instead of textAngular-sanitize 
 
 #### Features
 
-* **textAngular:** 
+* **textAngular:**
    * Added directives ta-resize-keep-aspect-ratio and ta-resize-maintain-aspect-ratio to control image-resize ([32697058](https://github.com/fraywing/textAngular/commit/32697058))
    * Added input to the safe element list ([945cfa00](https://github.com/fraywing/textAngular/commit/945cfa00))
 * **textAngularDemo:** Updated the demo to be in synch with this release ([93fd4048](https://github.com/fraywing/textAngular/commit/93fd4048))
@@ -830,7 +847,7 @@ The minimum required versions of AngularJS is 1.3 and Rangy is 1.3.
 
 2014-07-26 v1.2.2
 
-- FIX #190, #201, #206, #223, #224, 
+- FIX #190, #201, #206, #223, #224,
 - Merge #209, #204
 - Add option to disable sanitizer #233
 
@@ -934,7 +951,7 @@ The minimum required versions of AngularJS is 1.3 and Rangy is 1.3.
 - You can now change the model from the outside and have it affect the textAngular instance contents*
 - Cleaned up code*
 
-2013-10-10 v1.0.1 
+2013-10-10 v1.0.1
 
 - Added Tooltip Option, title has been renamed icon, and title is now the tooltip*
 - The minified version actually works now*
