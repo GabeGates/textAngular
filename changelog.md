@@ -1,5 +1,5 @@
 <a name="1.5.19"></a>
-## [1.5.18](https://github.com/GabeGates/textAngular/compare/v1.5.18...v1.5.19) (2018-09-26)
+## [1.5.19](https://github.com/GabeGates/textAngular/compare/v1.5.18...v1.5.19) (2018-09-26)
 
 ### Bug Fixes
 
