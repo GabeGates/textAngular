@@ -289,8 +289,9 @@
             blackAndWhiteGradients[0].id = 'gradient-black-' + uniqID;
             blackAndWhiteGradients[1].id = 'gradient-white-' + uniqID;
 
-            whiteAndBlackRects[0].setAttribute('fill', 'url(#' + blackAndWhiteGradients[1].id + ')');
-            whiteAndBlackRects[1].setAttribute('fill', 'url(#' + blackAndWhiteGradients[0].id + ')');
+            // Fix for when <base> is defined in HTML5
+            whiteAndBlackRects[0].setAttribute('fill', 'url(' + window.location.href + '#' + blackAndWhiteGradients[1].id + ')');
+            whiteAndBlackRects[1].setAttribute('fill', 'url(' + window.location.href + '#' + blackAndWhiteGradients[0].id + ')');
 
             this.slideElement.appendChild(slideClone);
             this.pickerElement.appendChild(pickerClone);
