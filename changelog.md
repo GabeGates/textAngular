@@ -1,5 +1,5 @@
 <a name="1.5.17"></a>
-## [1.5.17](https://github.com/fraywing/textAngular/compare/v1.5.16...v1.5.17) (2018-09-26)
+## [1.5.17](https://github.com/GabeGates/textAngular/compare/v1.5.16...v1.5.17) (2018-09-26)
 
 ### Forked Cleanup & Features
 
