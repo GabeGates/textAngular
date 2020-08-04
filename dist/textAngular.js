@@ -5,7 +5,7 @@ License : 2013 MIT
 @license textAngular
 Author : Gabe Gates
 License : 2018 MIT
-Version 1.5.19
+Version 1.8.0
 
 See README.md or https://github.com/GabeGates/textAngular/wiki for requirements and use.
 */
@@ -475,7 +475,7 @@ Commonjs package manager support (eg componentjs).
 })(window, window.document);
 
 // NOTE: textAngularVersion must match the Gruntfile.js 'setVersion' task.... and have format v/d+./d+./d+
-var textAngularVersion = 'v1.5.19';   // This is automatically updated during the build process to the current release!
+var textAngularVersion = 'v1.8.0';   // This is automatically updated during the build process to the current release!
 
 
 // IE version detection - http://stackoverflow.com/questions/4169160/javascript-ie-detection-why-not-use-simple-conditional-comments

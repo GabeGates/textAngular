@@ -1,9 +1,9 @@
-GabeGates/textAngular v1.5.19
+GabeGates/textAngular v1.8.0
 ===========
 
 ## Requirements
 
-1. `AngularJS` ~ `1.5.x`
+1. `AngularJS` ~ `1.8.x`
 2. `Rangy` ~ `1.3.x`, Both rangy-core and rangy-selectionsaverestore are required. (There is a minified combination of these two included in the dist folder)
 3. `Bootstrap` ^ `3.x` for the default styles and glyphicons (Can use `bootstrap-css-only`, you must add this to your bower or include this manually)
 4. NOTE: please check the requirements for earlier releases, if these are an issue.
@@ -64,9 +64,13 @@ If you find something, please let me know - throw me a message, or submit an iss
 
 ## Developer Notes
 
-When checking out, you need a node.js installation, running `npm install` and then `bower install` will get you setup with everything to run the unit tests and minification.
-All changes should be done in the src folder, running `grunt compile` to compile the app or use `grunt watch` to compile the files as you save them.
-When you are ready to create A PR check that `grunt` passes without errors and you have created tests for your feature if necessary. `grunt setVersion` will update versions referenced in our files using the version in package.json
+When checking out, you need a node.js installation, running `npm install` and then `npm run bower install` will get you setup with everything to run the unit tests and minification.
+All changes should be done in the src folder, running `npm run grunt compile` to compile the app or use `npm run grunt watch` to compile the files as you save them.
+When you are ready to create A PR:
+
+* `npm run grunt compile` - to compile one last time.
+* `npm run test` - passes without errors and you have created tests for your feature if necessary. 
+* `npm run grunt setVersion` will update versions referenced in our files using the version in package.json
 
 ## Customization
 
